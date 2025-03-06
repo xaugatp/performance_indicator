@@ -10,7 +10,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 
 
 def load_model():
-    with open("C:/Users/sauga/Desktop/EURON/Data Science/Linear_Regression/student_per_app/student_lr_final_model.pkl", "rb") as file:
+    with open("student_lr_final_model.pkl", "rb") as file:
         model,scaler,le=pickle.load(file)
     return model,scaler,le
 
