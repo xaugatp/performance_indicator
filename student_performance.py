@@ -7,6 +7,13 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+
+uri = "mongodb+srv://saugatp001:saugatp001@cluster0.t6ygz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+client = MongoClient(uri, server_api=ServerApi('1'))
+db = client['student']
+collection = db["student_pred"]
 
 
 def load_model():
@@ -35,6 +42,7 @@ def main():
     extra = st.selectbox("Extracurricular Activities", ["Yes", "No"])
     sleeping_hour = st.number_input("Sleeping Hours", min_value = 4, max_value = 10, value = 7)
     number_of_paper_solved = st.number_input("Number of Question Paper Solved", min_value = 1, max_value = 10, value = 5)
+    
     if st.button("Predict"):
         user_data = {
             "Hours Studied": hour_studied,
@@ -45,6 +53,11 @@ def main():
         }
         prediction = predict_data(user_data)
         st.success(f"Your prediction result is {prediction}")
+        user_data['prediction'] = float(prediction[0])
+        user_data = {key: int(value) if isinstance(value, np.integer) else float(value) if isinstance(value, np.floating) else value for key, value in user_data.items()}
+        
+        collection.insert_one(user_data)
+        
         
 
 if __name__ == "__main__":
