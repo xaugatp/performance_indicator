@@ -10,7 +10,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
-uri = "mongodb+srv://saugatp001:saugatp001@cluster0.t6ygz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+uri = "mongodb+srv://saugatp001:putyourown@cluster0.t6ygz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(uri, server_api=ServerApi('1'))
 db = client['student']
 collection = db["student_pred"]
